@@ -1,12 +1,14 @@
 import 'package:bookmarkapp/cubit/cubit.dart';
 import 'package:bookmarkapp/cubit/states.dart';
 import 'package:bookmarkapp/modules/search_results/searchResultsScreen.dart';
+import 'package:bookmarkapp/webview.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../main.dart';
 
 class BookItemScreen extends StatefulWidget {
@@ -25,6 +27,8 @@ class BookItemScreen extends StatefulWidget {
 
 class _BookItemScreenState extends State<BookItemScreen> {
   bool refresh = false;
+
+  late var controller;
 
   @override
   void initState() {
@@ -139,6 +143,35 @@ class _BookItemScreenState extends State<BookItemScreen> {
                                   onPressed: ()
                                   {
                                     print('book img pressed');
+
+                                    controller = WebViewController()
+                                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                                      ..setBackgroundColor(const Color(0x00000000))
+                                      ..setNavigationDelegate(
+                                        NavigationDelegate(
+                                          onProgress: (int progress) {
+                                            // Update loading bar.
+                                          },
+                                          onPageStarted: (String url) {},
+                                          onPageFinished: (String url) {},
+                                          onWebResourceError: (WebResourceError error) {},
+                                          onNavigationRequest: (NavigationRequest request) {
+                                            if (request.url.startsWith('https://www.youtube.com/')) {
+                                              return NavigationDecision.prevent;
+                                            }
+                                            return NavigationDecision.navigate;
+                                          },
+                                        ),
+                                      )
+                                      ..loadRequest(Uri.parse('https://www.google.com/search?q=${widget.model.title}+book'));
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) => WebViewImage(controller),
+                                      ),
+                                    );
+                                    // 'https://www.google.com/search?q=${widget.model.title}+book'
+                                  //  https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80
                                   },
                                   child: Image(
                                     image: AssetImage('assets/images/book.png'),
