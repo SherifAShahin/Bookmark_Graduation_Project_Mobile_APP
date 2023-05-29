@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bookmarkapp/github.dart';
 import 'package:bookmarkapp/layout/bookmark_home_screen.dart';
 import 'package:bookmarkapp/modules/getstarted/getstarted_screen.dart';
-import 'package:bookmarkapp/test.dart';
+import 'package:bookmarkapp/webview.dart';
 import 'package:flutter/material.dart';
 
 import 'cubit/cubit_observer.dart';
