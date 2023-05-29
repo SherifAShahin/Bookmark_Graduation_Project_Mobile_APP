@@ -1,4 +1,3 @@
-import 'package:bookmarkapp/github2.dart';
 import 'package:bookmarkapp/shared/components/components.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +56,7 @@ class GitHubScreen extends StatelessWidget {
           ),
         ),
         child: bookItemListBuilder(
-          model: model,
+            model: model,
         ),
       ),
     );

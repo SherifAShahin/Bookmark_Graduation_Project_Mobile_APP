@@ -666,213 +666,219 @@ Widget booksItemDetailBuilder({
   FontWeight headingFontWeight = FontWeight.w700,
   FontWeight textFontWeight = FontWeight.w400,
   Color textColor = Colors.black,
-}) => Container(
-  width: double.infinity,
-  decoration: BoxDecoration(
-    color: Colors.white.withOpacity(0.5),
-    borderRadius: BorderRadius.circular(
-      15.0,
+}) => SingleChildScrollView(
+  child: Container(
+    width: double.infinity,
+    margin: EdgeInsets.symmetric(
+      horizontal: 15.0,
+      vertical: 25.0,
     ),
-  ),
-  child: Padding(
-    padding: EdgeInsets.all(
-      20.0,
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.5),
+      borderRadius: BorderRadius.circular(
+        15.0,
+      ),
     ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-      [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-          [
-            Image.network(
-              model.image,
-              fit: imageBoxFit,
-              width: imageWidth,
-              height: imageHeight,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children:
-                [
-                  IconButton(
-                    onPressed: heartIconOnPressed,
-                    icon: Icon(
-                      heartIcon,
-                      size: iconSize,
-                      color: HexColor(
-                        iconHexColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  IconButton(
-                    onPressed: archiveIconOnPressed,
-                    icon: Icon(
-                      archiveIcon,
-                      size: iconSize,
-                      color: HexColor(
-                        iconHexColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  IconButton(
-                    onPressed: shareIconOnPressed,
-                    icon: Icon(
-                      shareIcon,
-                      size: iconSize,
-                      color: HexColor(
-                        iconHexColor,
-                      ),
-                    ),
-                  ),
-                ],
+    child: Padding(
+      padding: EdgeInsets.all(
+        20.0,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+        [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:
+            [
+              Image.network(
+                model.image,
+                fit: imageBoxFit,
+                width: imageWidth,
+                height: imageHeight,
               ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Text(
-          model.title,
-          style: TextStyle(
-              fontWeight: titleFontWeight,
-              fontSize: titleFontSize,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children:
+                  [
+                    IconButton(
+                      onPressed: heartIconOnPressed,
+                      icon: Icon(
+                        heartIcon,
+                        size: iconSize,
+                        color: HexColor(
+                          iconHexColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    IconButton(
+                      onPressed: archiveIconOnPressed,
+                      icon: Icon(
+                        archiveIcon,
+                        size: iconSize,
+                        color: HexColor(
+                          iconHexColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    IconButton(
+                      onPressed: shareIconOnPressed,
+                      icon: Icon(
+                        shareIcon,
+                        size: iconSize,
+                        color: HexColor(
+                          iconHexColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        RichText(
-            text: TextSpan(
-                children:
-                [
-                  TextSpan(
-                    text: "Author: ",
-                    style: TextStyle(
-                      fontWeight: headingFontWeight,
-                      color: textColor,
-                      fontSize: headingFontSize,
-                    ),
-                  ),
-                  TextSpan(
-                    text: model.author,
-                    style: TextStyle(
-                      fontWeight: textFontWeight,
-                      color: textColor,
-                      fontSize: textFontSize,
-                    ),
-                  )
-                ]
-            )
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        RichText(
-            text: TextSpan(
-                children:
-                [
-                  TextSpan(
-                    text: "Genre: ",
-                    style: TextStyle(
-                      fontWeight: headingFontWeight,
-                      color: textColor,
-                      fontSize: headingFontSize,
-                    ),
-                  ),
-                  TextSpan(
-                    text: model.genre,
-                    style: TextStyle(
-                      fontWeight: textFontWeight,
-                      color: textColor,
-                      fontSize: textFontSize,
-                    ),
-                  )
-                ]
-            )
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Text(
-          "Description: ",
-          style: TextStyle(
-            fontWeight: headingFontWeight,
-            color: textColor,
-            fontSize: headingFontSize,
+          SizedBox(
+            height: 15.0,
           ),
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-        ConditionalBuilder(
-          condition: model.description == null,
-          builder: (context) => Text(
-            noDescriptionMessage,
-            textAlign: TextAlign.justify,
+          Text(
+            model.title,
             style: TextStyle(
-              fontWeight: textFontWeight,
-              color: textColor,
-              fontSize: textFontSize,
+                fontWeight: titleFontWeight,
+                fontSize: titleFontSize,
             ),
           ),
-          fallback: (context) => Text(
-            model.description.toString(),
-            textAlign: TextAlign.justify,
+          SizedBox(
+            height: 20.0,
+          ),
+          RichText(
+              text: TextSpan(
+                  children:
+                  [
+                    TextSpan(
+                      text: "Author: ",
+                      style: TextStyle(
+                        fontWeight: headingFontWeight,
+                        color: textColor,
+                        fontSize: headingFontSize,
+                      ),
+                    ),
+                    TextSpan(
+                      text: model.author,
+                      style: TextStyle(
+                        fontWeight: textFontWeight,
+                        color: textColor,
+                        fontSize: textFontSize,
+                      ),
+                    )
+                  ]
+              )
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          RichText(
+              text: TextSpan(
+                  children:
+                  [
+                    TextSpan(
+                      text: "Genre: ",
+                      style: TextStyle(
+                        fontWeight: headingFontWeight,
+                        color: textColor,
+                        fontSize: headingFontSize,
+                      ),
+                    ),
+                    TextSpan(
+                      text: model.genre,
+                      style: TextStyle(
+                        fontWeight: textFontWeight,
+                        color: textColor,
+                        fontSize: textFontSize,
+                      ),
+                    )
+                  ]
+              )
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Text(
+            "Description: ",
             style: TextStyle(
-              fontWeight: textFontWeight,
+              fontWeight: headingFontWeight,
               color: textColor,
-              fontSize: textFontSize,
+              fontSize: headingFontSize,
             ),
           ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          children:
-          [
-            Text(
-              'Rating: ',
+          SizedBox(
+            height: 5.0,
+          ),
+          ConditionalBuilder(
+            condition: model.description == null,
+            builder: (context) => Text(
+              noDescriptionMessage,
+              textAlign: TextAlign.justify,
               style: TextStyle(
-                fontWeight: headingFontWeight,
+                fontWeight: textFontWeight,
                 color: textColor,
-                fontSize: headingFontSize,
+                fontSize: textFontSize,
               ),
             ),
-            RatingBar.builder(
-              itemSize: ratingIconSize,
-              initialRating: initialRating,
-              minRating: minRating,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemBuilder: (context, index) => Icon(
-                ratingIcon,
-                color: HexColor(
-                  ratingIconHexColor,
+            fallback: (context) => Text(
+              model.description.toString(),
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontWeight: textFontWeight,
+                color: textColor,
+                fontSize: textFontSize,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            children:
+            [
+              Text(
+                'Rating: ',
+                style: TextStyle(
+                  fontWeight: headingFontWeight,
+                  color: textColor,
+                  fontSize: headingFontSize,
                 ),
               ),
-              onRatingUpdate: (rating)
-              {
-                print(rating);
-              },
-            ),
-          ],
-        ),
-      ],
+              RatingBar.builder(
+                itemSize: ratingIconSize,
+                initialRating: initialRating,
+                minRating: minRating,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemBuilder: (context, index) => Icon(
+                  ratingIcon,
+                  color: HexColor(
+                    ratingIconHexColor,
+                  ),
+                ),
+                onRatingUpdate: (rating)
+                {
+                  print(rating);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     ),
   ),
 );

@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
+import '../cubit/cubit.dart';
+import '../cubit/states.dart';
 import '../modules/recommended/recommended_screen.dart';
 import '../shared/components/components.dart';
-import '../shared/cubit/states.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -19,9 +20,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BookMarkCubit(),
+      create: (context) => BookMarkCubit()..getRandomBooksData(),
       child: BlocConsumer<BookMarkCubit, BookMarkStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is BookMarkGetRandomBooksDataErrorState)
+            BookMarkCubit.get(context).getRandomBooksData();
+        },
         builder: (context, state) {
           BookMarkCubit cubit = BlocProvider.of(context);
           return Scaffold(
@@ -34,29 +38,53 @@ class HomeScreen extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              leading: null,
+              automaticallyImplyLeading: false,
+              actions:
+              [
+                IconButton(
+                  onPressed: (){
+                    print('reload button pressed');
+                    cubit.randomBooks = [];
+                    cubit.getRandomBooksData();
+                  },
+                  icon: Icon(
+                    Icons.refresh,
+                    size: 35.0,
+                  ),
+                ),
+              ],
               backgroundColor: HexColor(
                 '#045255',
               ),
             ),
             body: cubit.screens[cubit.currentIndex],
             floatingActionButton: FloatingActionButton(
-              onPressed: (){
+              onPressed: () async{
                 if(cubit.isBottomSheetOn)
                 {
                   if(bookSearchKey.currentState!.validate())
                   {
+                    BookMarkCubit? cubit = context.read<BookMarkCubit>();
+                    await cubit.getRecommendedBooksData(
+                      title: cubit.bookTitleController.text,
+                    );
+                    print(cubit.recommendedBooks);
                     print(cubit.bookTitleController.text);
-                    print(cubit.bookGenreController.text);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => SearchResultsScreen(),
+                        builder: (BuildContext context) => SearchResultsScreen(
+                          cubit,
+                          context,
+                        ),
                       ),
                     );
                     cubit.bottomSheetChangeState(
-                      Icons.search,
-                      false,
+                      Icons.arrow_forward,
+                      true,
                     );
+                    // cubit.currentIndex = 3;
                   }
                 }
                 else
@@ -110,32 +138,6 @@ class HomeScreen extends StatelessWidget {
                                       if(value!.isEmpty)
                                       {
                                         return 'book title should not be empty';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                      15.0,
-                                    ),
-                                  ),
-                                  child: defaultTextFormField(
-                                    controller: cubit.bookGenreController,
-                                    keyboardType: TextInputType.text,
-                                    label: 'Book genre',
-                                    isPassword: false,
-                                    borderRadius: 15.0,
-                                    validate: (value)
-                                    {
-                                      if(value!.isEmpty)
-                                      {
-                                        return 'book genre should not be empty';
                                       }
                                       return null;
                                     },
@@ -202,6 +204,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                   label: 'Liked',
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(
+                //     Ionicons.search,
+                //     size: 35.0,
+                //   ),
+                //   label: 'Search',
+                // ),
               ],
             ),
           );

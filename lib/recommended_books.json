@@ -1,0 +1,30 @@
+
+{
+"recommended_books": [
+{
+"author": "Janet Evanovich",
+"image_url": "http://images.amazon.com/images/P/0061009059.01.LZZZZZZZ.jpg",
+"title": "One for the Money (Stephanie Plum Novels (Paperback))"
+},
+{
+"author": "Sandra Brown",
+"image_url": "http://images.amazon.com/images/P/0446611808.01.LZZZZZZZ.jpg",
+"title": "Envy"
+},
+{
+"author": "David Baldacci",
+"image_url": "http://images.amazon.com/images/P/0446525804.01.LZZZZZZZ.jpg",
+"title": "Last Man Standing"
+},
+{
+"author": "Tracy Chevalier",
+"image_url": "http://images.amazon.com/images/P/0452283205.01.LZZZZZZZ.jpg",
+"title": "Falling Angels"
+},
+{
+"author": "Susan Vreeland",
+"image_url": "http://images.amazon.com/images/P/1565115430.01.LZZZZZZZ.jpg",
+"title": "Girl in Hyacinth Blue"
+}
+]
+}
